@@ -1,0 +1,21 @@
+---
+- name: Install Samba packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - samba
+    - samba-common
+    - samba-common-bin
+  # こういう書き方もできる
+  # with_items: [ 'samba', 'samba-common', 'samba-common-bin' ]
+
+- name: Create root Samba directories
+  file: path={{ item }} state=directory owner=root group=root mode=0755
+  with_items: [ '{{ samba_path }}', '{{ samba_shares_path }}' ]
+
+- name: Configure Samba server
+  template: src=etc/samba/smb.conf.j2
+            dest=/etc/samba/smb.conf
+            owner=root group=root mode=0644
+  notify: Reload samba
+
+

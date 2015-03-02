@@ -1,0 +1,20 @@
+---
+- name: Set up my home server.
+  hosts: my_home_server
+  sudo: yes # リモートホストで sudo を使って実行する
+
+  roles:
+    - common
+    - samba
+
+
+  # Samba
+  # ufwの設定
+  # 外付けHDDにCronでバックアップ
+  # DDNSポーリング
+  # ログをメールに送信
+
+
+  # ssh のポート変更
+  # Ruby on Rails
+
