@@ -76,8 +76,7 @@ samba_default_shares:
 
   'share':
     comment: 'Share Directory'
-    # path: '{{ samba_shares_path }}'
-    path: '{{ samba_shares_path }}/public'
+    path: '{{ samba_shares_path }}'
     browseable: 'yes'
     create_mode: '2777'
     directory_mode: '2777'
