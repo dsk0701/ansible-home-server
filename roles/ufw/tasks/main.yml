@@ -1,0 +1,40 @@
+---
+- name: Install ufw packages
+  apt: pkg=ufw state=latest
+
+# mail/ftp が遅くならないように 113 port は reject にしとくと良いっぽい
+# see - http://unixluser.org/techmemo/ident/
+- ufw: rule=reject port=auth log=yes
+
+# Deny everything and enable UFW
+- ufw: state=reset
+- ufw: state=enabled policy=deny
+
+# Set logging
+- ufw: logging=medium
+
+# ---
+# Settings of apps or services.
+# App setting files are /etc/ufw/applications.d/.
+
+# Allow OpenSSH
+# limit は30秒間に6回アクセスしてきた IP の接続を一定時間拒否する
+- ufw: rule=limit name=OpenSSH
+
+# Allow OpenSSH-custom
+- ufw: rule=allow port={{ ssh_port_custom }}
+
+# Allow all access from RFC1918 networks to this host:
+- ufw: rule=allow from_ip={{ local_network }} name=Samba
+
+# Allow HTTP/HTTPS
+- ufw: rule=allow port=80,443 proto=tcp
+
+- name: Configure UFW
+  template: src=etc/default/ufw.j2
+            dest=/etc/default/ufw
+            owner=root group=root mode=0644 backup=yes
+
+# Reload firewall
+- ufw: state=reloaded
+

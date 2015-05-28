@@ -1,0 +1,6 @@
+---
+
+local_network: '192.168.0.0/16'
+
+ipv6_enabled: 'no'
+

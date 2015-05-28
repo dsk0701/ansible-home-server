@@ -1,20 +1,23 @@
 ---
 - name: Set up my home server.
-  hosts: my_home_server
-  sudo: yes # リモートホストで sudo を使って実行する
+  hosts: home_server
+  sudo: yes
+
+  vars_prompt:
+    - name: "ssh_port_custom"
+      prompt: "specify the port number of ssh"
+      private: yes
+      default: 22
 
   roles:
     - common
     - samba
+    - ufw
 
 
-  # Samba
-  # ufwの設定
   # 外付けHDDにCronでバックアップ
   # DDNSポーリング
   # ログをメールに送信
 
-
-  # ssh のポート変更
   # Ruby on Rails
 
