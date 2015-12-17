@@ -7,7 +7,8 @@
 - ufw: rule=reject port=auth log=yes
 
 # Deny everything and enable UFW
-- ufw: state=reset
+# reset すると、毎回 changed になっちゃうので一旦無効化。
+# - ufw: state=reset
 - ufw: state=enabled policy=deny
 
 # Set logging

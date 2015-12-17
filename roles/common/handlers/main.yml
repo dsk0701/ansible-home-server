@@ -1,6 +1,4 @@
 ---
-- name: restart ntp
+- name: Restart ntp
   service: name=ntp state=restarted
 
-# - name: restart sshd
-#   service: name=ssh state=restarted

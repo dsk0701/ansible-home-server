@@ -5,6 +5,6 @@
     - ntp
     - sysv-rc-conf
     - git
-  notify: restart ntp
+  notify: Restart ntp
   tags: common-packages
 
