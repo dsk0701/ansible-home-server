@@ -17,9 +17,11 @@
     - docker
 
 
-  # 外付けHDDにCronでバックアップ
   # DDNSポーリング
   # ログをメールに送信
 
   # Ruby on Rails
+  # -> Dockerfile でやろう
+  # 外付けHDDにCronでバックアップ
+  # -> 自動マウントするのに fstab に外付けデバイスの uuid を記入する必要があるので手動でやろう
 
