@@ -10,10 +10,11 @@
       default: 22
 
   roles:
-    - sample
+    # - sample
     - common
     - samba
     - ufw
+    - docker
 
 
   # 外付けHDDにCronでバックアップ

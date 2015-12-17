@@ -1,0 +1,31 @@
+# ---
+# see - https://docs.docker.com/engine/installation/ubuntulinux/#adjust-memory-and-swap-accounting
+# ---
+---
+- name: Add the new gpg key.
+  apt_key: >
+    keyserver=hkp://p80.pool.sks-keyservers.net:80
+    id=58118E89F3A912897C070ADBF76221572C52609D
+
+- name: Add an apt repository for docker.
+  apt_repository: repo="deb https://apt.dockerproject.org/repo ubuntu-trusty main"
+
+- name : Purge the old repo if it exists.
+  apt: name=lxc-docker state=absent purge=yes
+
+- name: Set kernel release.
+  shell: /bin/uname -r
+  register: kernel_release
+  changed_when: False
+  failed_when: kernel_release.rc != 0
+
+- name: Install the recommended package.
+  apt: name=linux-image-extra-{{ kernel_release.stdout }} state=present update_cache=yes
+
+- name: Install docker packages.
+  apt: name=docker-engine state=present update_cache=yes
+  notify: Restart docker
+
+- name: Set up docker group for to avoid having to use sudo.
+  user: name={{ docker_user }} groups=docker append=yes
+
