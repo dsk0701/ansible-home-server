@@ -1,0 +1,41 @@
+---
+# 失敗しても failed にカウントしないが、赤文字でログ出力される。
+- name: this will not be counted as a failure
+  shell: /bin/false
+  ignore_errors: yes
+
+# ---
+# command モジュールで失敗した場合、FAILED が stderr に表示されるので以下のようにハンドリングする
+# ---
+# - name: this command prints FAILED when it fails
+#   command: /usr/bin/example-command -x -y -z
+#   register: command_result
+#   # command_result.stderr に 'FAILED' が含まれていたら failed にする。
+#   failed_when: "'FAILED' in command_result.stderr"
+
+# ---
+# shell モジュールは command モジュールとも手元で叩くのとも異なる出力なので、
+# -vvvv オプションをつけて実行して stderr の値を確認するのがよい。
+# ---
+# - name: this command prints command not found when it fails
+#   shell: /usr/bin/example-command -x -y -z
+#   register: command_result
+#   # command_result.stderr に 'not found' が含まれていたら failed にする。
+#   failed_when: "'not found' in command_result.stderr"
+
+# ---
+# shell / command モジュールは実行するだけで changed になってしまうので、
+# 条件により ok や failed にする例。
+# ---
+- shell: echo "Hello World!"
+  register: result
+  changed_when: "result.rc != 0"
+
+# this will never report 'changed' status
+- shell: echo "Hello World!"
+  changed_when: False
+
+- shell: grep -q SSH_AUTH_SOCK /etc/sudoers
+  register: result
+  failed_when: result.rc not in [0, 1]
+

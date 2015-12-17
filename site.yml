@@ -10,6 +10,7 @@
       default: 22
 
   roles:
+    - sample
     - common
     - samba
     - ufw
