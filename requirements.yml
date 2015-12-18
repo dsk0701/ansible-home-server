@@ -1,0 +1,8 @@
+# ---
+# see - http://docs.ansible.com/ansible/galaxy.html#advanced-control-over-role-requirements-files
+# ---
+---
+# mackerel-agent
+- src: mackerel.mackerel-agent
+  version: v0.3.0
+

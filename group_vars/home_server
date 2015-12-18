@@ -1,0 +1,6 @@
+---
+# The variables file used by the playbooks in the home_server group.
+# These don't have to be explicitly imported by vars_files: they are autopopulated.
+
+mackerel_agent_apikey: "3PrT7kSLK5wdfxNprN17m52CNpQuiRsPye3umoPrxTmV"
+

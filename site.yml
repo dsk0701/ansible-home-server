@@ -15,6 +15,7 @@
     - samba
     - ufw
     - docker
+    - mackerel.mackerel-agent
 
 
   # DDNSポーリング
