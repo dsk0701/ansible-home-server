@@ -6,3 +6,7 @@
 - src: mackerel.mackerel-agent
   version: v0.3.0
 
+# logwatch
+- src: kalos.logwatch
+  version: v1.1.0
+

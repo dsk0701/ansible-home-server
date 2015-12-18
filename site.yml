@@ -16,10 +16,10 @@
     - ufw
     - docker
     - mackerel.mackerel-agent
+    - kalos.logwatch
 
 
   # DDNSポーリング
-  # ログをメールに送信
 
   # Ruby on Rails
   # -> Dockerfile でやろう
