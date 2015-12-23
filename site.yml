@@ -12,6 +12,7 @@
   roles:
     # - sample
     - common
+    - ssh
     - samba
     - ufw
     - docker

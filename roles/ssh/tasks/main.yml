@@ -1,0 +1,11 @@
+---
+- name: Add default ssh port
+  lineinfile: dest=/etc/ssh/sshd_config line="Port 22" state=present
+
+- name: Add ssh port
+  lineinfile: dest=/etc/ssh/sshd_config line="Port {{ ssh_port_custom }}" state=present
+
+- name: Disable password authentication
+  lineinfile: dest=/etc/ssh/sshd_config line="PasswordAuthentication no" state=present
+  notify: Restart ssh
+
