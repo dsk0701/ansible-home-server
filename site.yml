@@ -9,6 +9,11 @@
       private: yes
       default: 22
 
+    - name: "ssmtp_auth_password"
+      prompt: "enter the password for the SMTP authentication user"
+      private: yes
+      confirm : yes
+
   roles:
     # - sample
     - common
@@ -18,12 +23,11 @@
     - docker
     - mackerel.mackerel-agent
     - kalos.logwatch
+    - franklinkim.ssmtp
 
 
   # DDNSポーリング
 
-  # Ruby on Rails
-  # -> Dockerfile でやろう
   # 外付けHDDにCronでバックアップ
   # -> 自動マウントするのに fstab に外付けデバイスの uuid を記入する必要があるので手動でやろう
 

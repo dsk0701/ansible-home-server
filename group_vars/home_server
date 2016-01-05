@@ -2,13 +2,42 @@
 # The variables file used by the playbooks in the home_server group.
 # These don't have to be explicitly imported by vars_files: they are autopopulated.
 
+# ---
+# mackerel.mackerel-agent
+# ---
 mackerel_agent_apikey: "3PrT7kSLK5wdfxNprN17m52CNpQuiRsPye3umoPrxTmV"
 
+# ---
+# kalos.logwatch
+# ---
 logwatch_email_to: "d.dubandtribal@gmail.com"  # Email Address which Logwatch reports to
 logwatch_email_from: ""           # Email Address of the sender of reports (default "ansible_hostname"@"ansible_domain")
-logwatch_detail: "low"            # The level of detail in the Logwatch report
+logwatch_detail: "high"           # The level of detail in the Logwatch report
 logwatch_range: "yesterday"       # The default time range for the Logwatch report
 logwatch_output: "mail"           # The output method of the Logwatch report
 logwatch_format: "text"           # The format of the Logwatch report
 logwatch_cron_time: "daily"       # Cron special time specification nickname - must match with logwatch range!
+
+# ---
+# franklinkim.ssmtp
+# ---
+# The person who gets all mail for userids < 1000
+# Make this empty to disable rewriting.
+ssmtp_root: d.dubandtribal@gmail.com
+# The place where the mail goes. The actual machine name is required no
+# MX records are consulted. Commonly mailhosts are named mail.domain.com
+ssmtp_mailhub: smtp.gmail.com:587
+# The full hostname (defaults to ansible_fqdn)
+# hostname: macchiato
+# Are users allowed to set their own From: address?
+# YES - Allow the user to specify their own From: address
+# NO - Use the system generated From: address
+ssmtp_from_line_override: 'YES'
+# use TLS
+ssmtp_use_starttls: 'YES'
+# user name
+ssmtp_auth_user: d.dubandtribal@gmail.com
+# password
+ssmtp_auth_pass: '{{ ssmtp_auth_password }}'
+
 

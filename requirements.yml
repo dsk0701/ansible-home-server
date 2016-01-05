@@ -10,3 +10,7 @@
 - src: kalos.logwatch
   version: v1.1.0
 
+# ssmtp
+- src: franklinkim.ssmtp
+  version: 1.0.1
+
