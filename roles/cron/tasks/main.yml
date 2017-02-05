@@ -1,0 +1,7 @@
+---
+- name: Set up cron tasks
+  cron:
+    name: "Notify ip to MyDNS"
+    special_time: hourly
+    job: "wget -q -O /dev/null http://{{ mydns_id }}:{{ mydns_pw }}@www.mydns.jp/login.html"
+

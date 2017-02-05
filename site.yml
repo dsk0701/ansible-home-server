@@ -1,7 +1,7 @@
 ---
 - name: Set up my home server.
   hosts: home_server
-  sudo: yes
+  become: yes
 
   vars_prompt:
     - name: "ssh_port_custom"
@@ -10,7 +10,12 @@
       default: 22
 
     - name: "ssmtp_auth_password"
-      prompt: "enter the password for the SMTP authentication user"
+      prompt: "enter the password for the SMTP authentication password"
+      private: yes
+      confirm : yes
+
+    - name: "mydns_pw"
+      prompt: "enter the master password for the MyDNS"
       private: yes
       confirm : yes
 
@@ -24,9 +29,8 @@
     - mackerel.mackerel-agent
     - kalos.logwatch
     - franklinkim.ssmtp
+    - cron
 
-
-  # DDNSポーリング
 
   # 外付けHDDにCronでバックアップ
   # -> 自動マウントするのに fstab に外付けデバイスの uuid を記入する必要があるので手動でやろう
