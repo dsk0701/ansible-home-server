@@ -1,6 +1,6 @@
 ---
 - name: Install samba packages
-  apt: pkg={{ item }} state=latest
+  apt: pkg={{ item }} state=present
   with_items:
     - samba
     - samba-common

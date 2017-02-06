@@ -1,6 +1,6 @@
 ---
 - name: Install ufw packages
-  apt: pkg=ufw state=latest
+  apt: pkg=ufw state=present
 
 # mail/ftp が遅くならないように 113 port は reject にしとくと良いっぽい
 # see - http://unixluser.org/techmemo/ident/
