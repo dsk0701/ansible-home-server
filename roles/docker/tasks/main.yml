@@ -1,17 +1,12 @@
 # ---
-# see - https://docs.docker.com/engine/installation/ubuntulinux/#adjust-memory-and-swap-accounting
+# see - https://docs.docker.com/engine/installation/linux/ubuntu/#os-requirements
 # ---
 ---
-- name: Add the new gpg key.
-  apt_key: >
-    keyserver=hkp://p80.pool.sks-keyservers.net:80
-    id=58118E89F3A912897C070ADBF76221572C52609D
-
-- name: Add an apt repository for docker.
-  apt_repository: repo="deb https://apt.dockerproject.org/repo ubuntu-trusty main"
-
-- name : Purge the old repo if it exists.
-  apt: name=lxc-docker state=absent purge=yes
+- name : Purge the old docker if it exists.
+  apt: name={{ item }} state=absent purge=yes
+  with_items:
+    - docker
+    - docker-engine
 
 - name: Set kernel release.
   shell: /bin/uname -r
@@ -19,11 +14,38 @@
   changed_when: False
   failed_when: kernel_release.rc != 0
 
-- name: Install the recommended package.
-  apt: name=linux-image-extra-{{ kernel_release.stdout }} state=present update_cache=yes
+- name: Install the recommended packages for Trusty 14.04.
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - linux-image-extra-{{ kernel_release.stdout }}
+    - linux-image-extra-virtual
 
-- name: Install docker packages.
-  apt: name=docker-engine state=present update_cache=yes
+- name: Install the necessary packages to install docker-ce
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+
+- name: Add the new gpg key.
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  register: result
+  changed_when: "result.rc != 0"
+
+- name: Set kernel release.
+  shell: /usr/bin/lsb_release -cs
+  register: lsb_release
+  changed_when: "lsb_release.rc != 0"
+
+- name: Add the stable repository.
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release.stdout }} stable
+    state: present
+  register: set_repo
+
+- name: Install docker-ce 17.03.
+  apt: name=docker-ce state=present update_cache=yes
   notify: Restart docker
 
 - name: Set up docker group for to avoid having to use sudo.
