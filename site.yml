@@ -26,6 +26,7 @@
     - samba
     - ufw
     - docker
+    - docker-compose
     - mackerel.mackerel-agent
     - kalos.logwatch
     - franklinkim.ssmtp
