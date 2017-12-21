@@ -21,7 +21,6 @@
 
 - name: Install datadog-agent
   apt: name=datadog-agent state=present update_cache=yes
-  notify: Restart datadog-agent
 
 - name: Copy datadog.conf
   shell: creates=/etc/dd-agent/datadog.conf cp -p /etc/dd-agent/datadog.conf.example /etc/dd-agent/datadog.conf
@@ -32,4 +31,5 @@
     regexp: 'api_key:.*'
     line: 'api_key: {{ datadog_agent_apikey }}'
     state: present
+  notify: Restart datadog-agent
 
