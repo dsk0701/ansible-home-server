@@ -1,0 +1,35 @@
+# ---
+# see - https://app.datadoghq.com/signup/agent#ubuntu
+# ---
+---
+- name: Set up apt so that it can download through https.
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - apt-transport-https
+
+- name: Add the stable repository.
+  apt_repository:
+    repo: deb https://apt.datadoghq.com/ stable main
+    state: present
+  register: set_repo
+
+- name: Add an apt key by id from a keyserver
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: C7A7DA52
+    state: present
+
+- name: Install datadog-agent
+  apt: name=datadog-agent state=present update_cache=yes
+  notify: Restart datadog-agent
+
+- name: Copy datadog.conf
+  shell: creates=/etc/dd-agent/datadog.conf cp -p /etc/dd-agent/datadog.conf.example /etc/dd-agent/datadog.conf
+
+- name: Add api key
+  lineinfile:
+    dest: /etc/dd-agent/datadog.conf
+    regexp: 'api_key:.*'
+    line: 'api_key: {{ datadog_agent_apikey }}'
+    state: present
+

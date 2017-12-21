@@ -25,6 +25,7 @@
     - ssh
     - samba
     - ufw
+    - datadog-agent
     - docker
     - docker-compose
     - mackerel.mackerel-agent
