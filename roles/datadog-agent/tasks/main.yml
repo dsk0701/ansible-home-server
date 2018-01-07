@@ -31,5 +31,11 @@
     regexp: 'api_key:.*'
     line: 'api_key: {{ datadog_agent_apikey }}'
     state: present
+
+- name: Add docker group to dd-agent user for access /var/run/docker.sock.
+  user: name=dd-agent groups=docker append=yes
+
+- name: Copy docker_daemon.yaml
+  shell: creates=/etc/dd-agent/conf.d/docker_daemon.yaml cp -p /etc/dd-agent/conf.d/docker_daemon.yaml.example /etc/dd-agent/conf.d/docker_daemon.yaml
   notify: Restart datadog-agent
 
