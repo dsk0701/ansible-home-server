@@ -9,7 +9,7 @@ samba_netbios_name: '{{ ansible_hostname }}'
 samba_server_string: '%h file server'
 
 # Name of the /etc/init.d/ service script
-samba_service_name: 'samba'
+samba_service_name: 'smbd'
 
 # Which hash variable is used to configure [global] section in smb.conf
 samba_global: '{{ samba_default_global }}'
