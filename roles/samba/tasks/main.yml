@@ -1,25 +1,34 @@
 ---
 - name: Install samba packages
-  apt: pkg={{ item }} state=present
-  with_items:
+  apt:
+    update_cache: yes
+    name:
     - samba
     - samba-common
     - samba-common-bin
-  # こういう書き方もできる
-  # with_items: [ 'samba', 'samba-common', 'samba-common-bin' ]
 
 - name: Create root samba directories
-  file: path={{ item }} state=directory owner=root group=root mode=0755
-  with_items: [ '{{ samba_path }}' ]
+  file:
+    path: '{{ samba_path }}'
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
 
 - name: Create samba share directories
-  file: path={{ item }} state=directory owner=root group=root mode=0777
-  with_items: [ '{{ samba_shares_path }}' ]
+  file:
+    path: '{{ samba_shares_path }}'
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
 
 - name: Configure samba server
-  template: src=etc/samba/smb.conf.j2
-            dest=/etc/samba/smb.conf
-            owner=root group=root mode=0644
+  template:
+    src: etc/samba/smb.conf.j2
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: 0644
   notify: Reload samba
-
 
