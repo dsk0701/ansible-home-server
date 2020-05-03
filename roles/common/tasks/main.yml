@@ -1,9 +1,9 @@
 ---
 - name: Install common packages
-  apt: name={{ item }} state=present update_cache=yes
-  with_items:
+  apt:
+    update_cache: yes
+    name:
     - ntp
-    - sysv-rc-conf
     - git
   notify: Restart ntp
   tags: common-packages
