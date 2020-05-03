@@ -1,5 +1,6 @@
 ---
 
-local_network: '192.168.0.0/16'
-ipv6_enabled: 'no'
+local_network_ipv4: '192.168.0.0/16'
+local_network_ipv6: 'fc00::/7'
+ipv6_enabled: 'yes'
 
