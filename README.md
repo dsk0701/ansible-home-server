@@ -6,5 +6,5 @@
 
 ## execute playbook
 
-    $ ansible-playbook site.yml
+    $ ansible-playbook -i {develop|production} site.yml
 
