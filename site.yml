@@ -26,7 +26,6 @@
     - samba
     - ufw
     - mackerelio.mackerel-agent
-    # - datadog-agent
       # - docker
       # - docker-compose
       # - kalos.logwatch
