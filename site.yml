@@ -6,18 +6,18 @@
   vars_prompt:
     - name: "ssh_port_custom"
       prompt: "specify the port number of ssh"
-      private: yes
+      private: no
       default: 22
 
-    - name: "ssmtp_auth_password"
-      prompt: "enter the password for the SMTP authentication password"
-      private: yes
-      confirm : yes
+      # - name: "ssmtp_auth_password"
+      #   prompt: "enter the password for the SMTP authentication password"
+      #   private: yes
+      #   confirm : yes
 
-    - name: "mydns_pw"
-      prompt: "enter the master password for the MyDNS"
-      private: yes
-      confirm : yes
+      # - name: "mydns_pw"
+      #   prompt: "enter the master password for the MyDNS"
+      #   private: yes
+      #   confirm : yes
 
   roles:
     # - sample
@@ -25,13 +25,13 @@
     - ssh
     - samba
     - ufw
-    - datadog-agent
-    - docker
-    - docker-compose
-    - mackerel.mackerel-agent
-    - kalos.logwatch
-    - franklinkim.ssmtp
-    - cron
+    - mackerelio.mackerel-agent
+    # - datadog-agent
+      # - docker
+      # - docker-compose
+      # - kalos.logwatch
+      # - franklinkim.ssmtp
+      # - cron
 
 
   # 外付けHDDにCronでバックアップ
