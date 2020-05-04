@@ -3,8 +3,8 @@
   apt:
     update_cache: yes
     name:
-    - ntp
-    - git
+      - ntp
+      - git
   notify: Restart ntp
   tags: common-packages
 

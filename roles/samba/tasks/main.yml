@@ -3,9 +3,9 @@
   apt:
     update_cache: yes
     name:
-    - samba
-    - samba-common
-    - samba-common-bin
+      - samba
+      - samba-common
+      - samba-common-bin
 
 - name: Create root samba directories
   file:
