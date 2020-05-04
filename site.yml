@@ -9,29 +9,27 @@
       private: no
       default: 22
 
-      # - name: "ssmtp_auth_password"
-      #   prompt: "enter the password for the SMTP authentication password"
-      #   private: yes
-      #   confirm : yes
+    - name: "ssmtp_auth_password"
+      prompt: "enter the password for the SMTP authentication password"
+      private: yes
+      confirm : yes
 
-      # - name: "mydns_pw"
-      #   prompt: "enter the master password for the MyDNS"
-      #   private: yes
-      #   confirm : yes
+    - name: "mydns_pw"
+      prompt: "enter the master password for the MyDNS"
+      private: yes
+      confirm : yes
 
   roles:
-    # - sample
     - common
     - ssh
     - samba
     - ufw
+    - docker
+    - docker-compose
+    - cron
     - mackerelio.mackerel-agent
-      # - docker
-      # - docker-compose
-      # - kalos.logwatch
-      # - franklinkim.ssmtp
-      # - cron
-
+    - hwwilliams.logwatch
+    - weareinteractive.ssmtp
 
   # 外付けHDDにCronでバックアップ
   # -> 自動マウントするのに fstab に外付けデバイスの uuid を記入する必要があるので手動でやろう
