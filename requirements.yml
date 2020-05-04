@@ -7,8 +7,8 @@
   version: v0.8.4
 
 # logwatch
-- src: kalos.logwatch
-  version: v1.1.0
+- src: hwwilliams.logwatch
+  version: v1.0
 
 # ssmtp
 - src: franklinkim.ssmtp
