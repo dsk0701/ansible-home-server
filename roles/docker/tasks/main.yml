@@ -1,53 +1,59 @@
 # ---
 # see - https://docs.docker.com/engine/installation/linux/ubuntu/#os-requirements
 # ---
+#
+# Ubuntu20.04ではsudo apt install -y docker.ioで最新版をインストールできるようになっていた。
+# なのでこの手順は不要だが、roleの参考にこのファイルは残しておく。
 ---
 - name : Purge the old docker if it exists.
-  apt: name={{ item }} state=absent purge=yes
-  with_items:
-    - docker
-    - docker-engine
+  apt:
+    name:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+    state: absent
+    purge: yes
 
-- name: Set kernel release.
-  shell: /bin/uname -r
-  register: kernel_release
-  changed_when: False
-  failed_when: kernel_release.rc != 0
+- name: Update the apt package index and install packages to allow apt to use a repository over HTTPS
+  apt:
+    update_cache: yes
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
 
-- name: Install the recommended packages for Trusty 14.04.
-  apt: name={{ item }} state=present update_cache=yes
-  with_items:
-    - linux-image-extra-{{ kernel_release.stdout }}
-    - linux-image-extra-virtual
-
-- name: Install the necessary packages to install docker-ce
-  apt: name={{ item }} state=present update_cache=yes
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - software-properties-common
-
-- name: Add the new gpg key.
+- name: Add Docker’s official GPG key.
   shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   register: result
-  changed_when: "result.rc != 0"
+  changed_when: result.rc != 0
 
 - name: Set kernel release.
   shell: /usr/bin/lsb_release -cs
   register: lsb_release
   changed_when: "lsb_release.rc != 0"
 
+# NOTE: Ubuntu20.04 focal のリポジトリがなくてここでエラーになる
 - name: Add the stable repository.
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release.stdout }} stable
     state: present
-  register: set_repo
 
-- name: Install docker-ce 17.03.
-  apt: name=docker-ce state=present update_cache=yes
-  notify: Restart docker
+- name: Update the apt package index, and install the latest version of Docker Engine and containerd, or go to the next step to install a specific version.
+  apt:
+    update_cache: yes
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    notify: Restart docker
 
 - name: Set up docker group for to avoid having to use sudo.
-  user: name={{ docker_user }} groups=docker append=yes
+  user:
+    name: '{{ docker_user }}'
+    groups: docker
+    append: yes
 
