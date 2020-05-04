@@ -1,7 +1,13 @@
 ---
-- name: Set up cron tasks
+- name: Set up DDNS notification for IPv4
   cron:
-    name: "Notify ip to MyDNS"
+    name: "Notify ipv4 to MyDNS"
     special_time: hourly
-    job: "wget -q -O /dev/null http://{{ mydns_id }}:{{ mydns_pw }}@www.mydns.jp/login.html"
+    job: "wget -q -O /dev/null http://{{ mydns_id }}:{{ mydns_pw }}@ipv4.mydns.jp/login.html"
+
+- name: Set up DDNS notification for IPv6
+  cron:
+    name: "Notify ipv6 to MyDNS"
+    special_time: hourly
+    job: "wget -q -O /dev/null http://{{ mydns_id }}:{{ mydns_pw }}@ipv6.mydns.jp/login.html"
 
