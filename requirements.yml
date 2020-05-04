@@ -11,6 +11,6 @@
   version: v1.0
 
 # ssmtp
-- src: franklinkim.ssmtp
-  version: 1.0.1
+- src: weareinteractive.ssmtp
+  version: 1.0.2
 
