@@ -1,9 +1,6 @@
 ---
-- name: Install the necessary packages to install docker-compose
-  apt: name={{ item }} state=present update_cache=yes
-  with_items:
-    - python-pip
-
 - name: Install docker-compose
-  pip: name=docker-compose state=present
+  apt:
+    update_cache: yes
+    name: docker-compose
 
