@@ -32,3 +32,9 @@
     mode: 0644
   notify: Reload samba
 
+- name: Daily backup for samba
+  cron:
+    name: "Mirror samba"
+    special_time: daily
+    job: "[ -d /external-volume-01 ] || exit 0; rsync -av --delete {{ samba_path }} /external-volume-01"
+
