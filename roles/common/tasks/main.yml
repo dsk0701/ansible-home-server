@@ -8,3 +8,7 @@
   notify: Restart ntp
   tags: common-packages
 
+- name: set timezone to Asia/Tokyo
+  timezone:
+    name: Asia/Tokyo
+
