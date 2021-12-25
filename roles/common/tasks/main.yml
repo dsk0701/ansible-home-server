@@ -5,6 +5,7 @@
     name:
       - ntp
       - git
+      - lm-sensors
   notify: Restart ntp
   tags: common-packages
 
