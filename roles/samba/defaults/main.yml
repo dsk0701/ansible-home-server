@@ -77,6 +77,9 @@ samba_default_global:
   show_add_printer_wizard: 'no'
   disable_spoolss: 'yes' # プリンタ共有無効化
 
+  # iOSからファイルコピーできるように
+  vfs_objects: 'catia fruit streams_xattr'
+
 # Hash of hashes of default shares
 samba_default_shares:
 
