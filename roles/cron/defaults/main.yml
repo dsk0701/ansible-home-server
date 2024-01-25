@@ -3,3 +3,9 @@
 mydns_id: 'mydns334694'
 mydns_pw: 'mydns_pw'
 
+backup_server_key: '/home/dsk/.ssh/id_rsa_synology'
+backup_src_path: '/home/dsk'
+backup_server_user: 'dsk'
+backup_server: '192.168.0.9'
+backup_server_dst_path: 'NetBackup/backupdata'
+

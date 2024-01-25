@@ -36,5 +36,5 @@
   cron:
     name: "Mirror samba"
     special_time: daily
-    job: "rsync -av --delete -e 'ssh -i {{ samba_backup_server_user_private_ssh_key }}' {{ samba_path }} {{ samba_backup_server_user }}@{{ samba_backup_server }}::{{ samba_backup_server_dst_dir }}"
+    job: "rsync -av --delete -e 'ssh -i {{ samba_backup_server_user_private_ssh_key }}' {{ samba_path }} {{ samba_backup_server_user }}@{{ samba_backup_server }}::{{ samba_backup_server_dst_path }}"
 

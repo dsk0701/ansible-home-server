@@ -11,3 +11,9 @@
     special_time: hourly
     job: "wget -q -O /dev/null http://{{ mydns_id }}:{{ mydns_pw }}@ipv6.mydns.jp/login.html"
 
+- name: Daily backup for home
+  cron:
+    name: "Mirror home"
+    special_time: daily
+    job: "rsync -av --delete -e 'ssh -i {{ backup_server_key }}' {{ backup_src_path }} {{ backup_server_user }}@{{ backup_server }}::{{ backup_server_dst_path }}"
+

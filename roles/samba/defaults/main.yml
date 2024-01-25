@@ -2,7 +2,7 @@
 
 # Backup Server
 samba_backup_server: '192.168.0.9'
-samba_backup_server_dst_dir: 'NetBackup/backupdata'
+samba_backup_server_dst_path: 'NetBackup/backupdata'
 samba_backup_server_user: 'dsk'
 samba_backup_server_user_private_ssh_key: '/home/dsk/.ssh/id_rsa_synology'
 
