@@ -2,7 +2,7 @@
 
 ## install galaxy roles
 
-    $ ansible-galaxy install -r requirements.yml
+    $ ansible-galaxy install --force -r requirements.yml
 
 ## execute playbook
 

@@ -29,7 +29,7 @@
     - cron
     - mackerelio.mackerel-agent
     - hwwilliams.logwatch
-    - weareinteractive.ssmtp
+    - joelnb.ansible_ssmtp
 
   # 外付けHDDにCronでバックアップ
   # -> 自動マウントするのに fstab に外付けデバイスの uuid を記入する必要があるので手動でやろう

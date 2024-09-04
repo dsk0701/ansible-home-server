@@ -38,24 +38,27 @@ logwatch_service_include: []
 
 
 # ---
-# weareinteractive.ssmtp
+# joelnb.ansible_ssmtp
 # ---
-# The person who gets all mail for userids < 1000
-# Make this empty to disable rewriting.
+# The user that gets all mail for userids less than 1000. If blank, address rewriting is disabled.
 ssmtp_root: d.dubandtribal@gmail.com
-# The place where the mail goes. The actual machine name is required no
-# MX records are consulted. Commonly mailhosts are named mail.domain.com
+# The SMTP server to send mail to.
 ssmtp_mailhub: smtp.gmail.com:587
-# The full hostname (defaults to ansible_fqdn)
-# hostname: macchiato
-# Are users allowed to set their own From: address?
-# YES - Allow the user to specify their own From: address
-# NO - Use the system generated From: address
+# Default: {{ ansible_hostname }}
+# The full qualified name of the host. If not specified, the host is queried for its hostname.
+# ssmtp_hostname: macchiato
+# Specifies whether the From header of an email, if any, may override the default domain.
 ssmtp_from_line_override: 'YES'
-# use TLS
-ssmtp_use_starttls: 'YES'
-# user name
+# The username to authenticate to the SMTP server with.
 ssmtp_auth_user: d.dubandtribal@gmail.com
 # password
 ssmtp_auth_pass: '{{ ssmtp_auth_password }}'
+# The authentication method to use with the SMTP server.
+ssmtp_auth_method: 'LOGIN'
+# Use TLS to connect to the SMTP server.
+ssmtp_use_tls: true
+# Use STARTTLS to connect to the SMTP server.
+ssmtp_use_starttls: true
+# The email to send systemd failure notifications to.
+ssmtp_systemd_notification_address: d.dubandtribal@gmail.com
 

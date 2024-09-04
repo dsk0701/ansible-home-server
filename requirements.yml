@@ -4,13 +4,12 @@
 ---
 # mackerel-agent
 - src: mackerelio.mackerel-agent
-  version: v0.8.4
+  version: v0.11.0
 
 # logwatch
 - src: hwwilliams.logwatch
   version: v1.0
 
 # ssmtp
-- src: weareinteractive.ssmtp
-  version: 1.0.2
+- src: joelnb.ansible_ssmtp
 
