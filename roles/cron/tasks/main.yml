@@ -15,5 +15,5 @@
   cron:
     name: "Mirror home"
     special_time: daily
-    job: "rsync -av --delete -e 'ssh -i {{ backup_server_key }}' {{ backup_src_path }} {{ backup_server_user }}@{{ backup_server }}::{{ backup_server_dst_path }}"
+    job: "rsync -av --delete -e 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i {{ backup_server_key }}' {{ backup_src_path }} {{ backup_server_user }}@{{ backup_server }}::{{ backup_server_dst_path }}"
 
