@@ -11,10 +11,22 @@
     line: "Port {{ ssh_port_custom }}"
     state: present
 
-- name: Disable password authentication
+# sshd は同じ項目が複数あると最初の値を採用する。
+# sshd_config 本体に後から追記しても既存の "PasswordAuthentication yes" に負けるため、
+# 本体の先頭で Include される sshd_config.d に置いて確実に優先させる。
+- name: Harden sshd authentication settings
+  template:
+    src: etc/ssh/sshd_config.d/00-hardening.conf.j2
+    dest: /etc/ssh/sshd_config.d/00-hardening.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart ssh
+
+- name: Remove stale PasswordAuthentication line appended by older playbook
   lineinfile:
     path: /etc/ssh/sshd_config
     line: "PasswordAuthentication no"
-    state: present
+    state: absent
   notify: Restart ssh
 

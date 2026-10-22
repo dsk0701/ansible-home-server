@@ -1,6 +1,14 @@
 ---
-- name: Restart ssh
+# 設定ミスのまま再起動して締め出されないよう、先に構文チェックする。
+# ハンドラは定義順に実行され、チェックが失敗すると後続の再起動は実行されない
+- name: Validate sshd config
+  command: sshd -t
+  changed_when: false
+  listen: Restart ssh
+
+- name: Restart ssh service
   service:
     name: ssh
     state: restarted
+  listen: Restart ssh
 
