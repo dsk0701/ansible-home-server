@@ -5,7 +5,7 @@
 # ---
 # mackerel.mackerel-agent
 # ---
-mackerel_agent_apikey: "3PrT7kSLK5wdfxNprN17m52CNpQuiRsPye3umoPrxTmV"
+mackerel_agent_apikey: '{{ mackerel_apikey }}'
 
 # ---
 # hwwilliams.logwatch

@@ -19,6 +19,11 @@
       private: yes
       confirm : yes
 
+    - name: "mackerel_apikey"
+      prompt: "enter the API key for the Mackerel"
+      private: yes
+      confirm : yes
+
   roles:
     - common
     - ssh
