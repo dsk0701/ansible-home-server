@@ -24,27 +24,62 @@
 # address has attempted to initiate 6 or more connections in the last
 # 30 seconds. See  http://www.debian-administration.org/articles/187
 # for details. Typical usage is:
-- name: Protecting against brute-force login attacks
+# limit は30秒間に6回アクセスしてきた IP の接続を一定時間拒否する
+# 22番は LAN 内からのみ許可する。削除より先に追加し、実行中の接続を切らないようにする
+- name: Allow ssh from RFC1918(IPv4) networks
+  ufw:
+    rule: limit
+    from_ip: '{{ local_network_ipv4 }}'
+    port: ssh
+    proto: tcp
+
+- name: Allow ssh from RFC4193(IPv6) networks
+  ufw:
+    rule: limit
+    from_ip: '{{ local_network_ipv6 }}'
+    port: ssh
+    proto: tcp
+
+# 以前の playbook が作った「どこからでも 22番を許可」するルールを消す
+- name: Remove ssh rule open to anywhere
   ufw:
     rule: limit
     port: ssh
     proto: tcp
+    delete: yes
+
+- name: Remove OpenSSH app rule open to anywhere
+  ufw:
+    rule: limit
+    name: OpenSSH
+    delete: yes
+
+# ssh_port_custom に 22 を入力して実行したときに作られたルール
+- name: Remove port 22 rule allowed from anywhere
+  ufw:
+    rule: allow
+    port: '22'
+    delete: yes
+
+# 22番を入力すると全世界に開いてしまうため、22番以外のときだけ許可する
+- name: Allow OpenSSH-custom
+  ufw:
+    rule: limit
+    port: '{{ ssh_port_custom }}'
+    proto: tcp
+  when: ssh_port_custom | int != 22
+
+# 以前の playbook が作った TCP/UDP 両方を無制限に許可するルールを消す
+- name: Remove OpenSSH-custom rule without proto and limit
+  ufw:
+    rule: allow
+    port: '{{ ssh_port_custom }}'
+    delete: yes
+  when: ssh_port_custom | int != 22
 
 # ---
 # Settings of apps or services.
 # App setting files are /etc/ufw/applications.d/.
-
-# Allow OpenSSH
-# limit は30秒間に6回アクセスしてきた IP の接続を一定時間拒否する
-- name: Protecting against brute-force login attacks using OpenSSH
-  ufw:
-    rule: limit
-    name: OpenSSH
-
-- name: Allow OpenSSH-custom
-  ufw:
-    rule: allow
-    port: '{{ ssh_port_custom }}'
 
 - name: Allow all access from RFC1918(IPv4) networks to this host
   ufw:
